@@ -1,0 +1,5 @@
+routes:
+  - service: community
+  - id: get-community-detail
+    inbound: /v1/gw/comm/detail
+    outbound: /v1/comm/detail

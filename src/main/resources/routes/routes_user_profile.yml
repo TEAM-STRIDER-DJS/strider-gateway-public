@@ -1,0 +1,95 @@
+routes:
+  - service: user-profile
+  - id: send-code
+    inbound: /api/v1/strider/user-profile/phone/send-code
+    outbound: /api/v1/user/profile/phone/send-code
+  - id: verify-code
+    inbound: /api/v1/strider/user-profile/phone/verify-code
+    outbound: /api/v1/user/profile/phone/verify-code
+  - id: find-my-id
+    inbound: /api/v1/strider/user-profile/find/id
+    outbound: /api/v1/user/profile/find/id
+  - id: reset-password
+    inbound: /api/v1/strider/user-profile/password/reset
+    outbound: /api/v1/user/profile/password/reset
+  - id: strider-sign-up
+    inbound: /api/v1/strider/user-profile/signup
+    outbound: /api/v1/user/profile/signup
+  - id: strider-login
+    inbound: /api/v1/strider/user-profile/login
+    outbound: /api/v1/user/profile/login
+  - id: strider-logout
+    inbound: /api/v1/strider/user-profile/logout
+    outbound: /api/v1/user/profile/logout
+  - id: is-available-id
+    inbound: /api/v1/strider/user-profile/strider-user/{id}
+    outbound: /api/v1/user/profile/strider-user/{id}
+  - id: is-available-phone-number
+    inbound: /api/v1/strider/user-profile/strider-user/phone/{phoneNum}
+    outbound: /api/v1/user/profile/strider-user/phone/{phoneNum}
+  - id: check-or-refresh-access-token
+    inbound: /api/v1/strider/user-profile/auth/token
+    outbound: /api/v1/user/profile/auth/token
+  - id: find-user-profile
+    inbound: /api/v1/strider/user-profile/find
+    outbound: /api/v1/user/profile/find
+  - id: update-user-profile
+    inbound: /api/v1/strider/user-profile/update
+    outbound: /api/v1/user/profile/update
+  - id: delete-user
+    inbound: /api/v1/strider/user-profile/delete
+    outbound: /api/v1/user/profile/delete
+  - id: update-password
+    inbound: /api/v1/strider/user-profile/update/password
+    outbound: /api/v1/user/profile/update/password
+  - id: upload-profile-image
+    inbound: /api/v1/strider/user-profile/image
+    outbound: /api/v1/user/profile/image
+  - id: delete-profile-image
+    inbound: /api/v1/strider/user-profile/image/delete
+    outbound: /api/v1/user/profile/image/delete
+  - id: report-user
+    inbound: /api/v1/strider/user-profile/report
+    outbound: /api/v1/user/profile/report
+  - id: block-user
+    inbound: /api/v1/strider/user-profile/block/{id}
+    outbound: /api/v1/user/profile/block/{id}
+  - id: release-user
+    inbound: /api/v1/strider/user-profile/release/{id}
+    outbound: /api/v1/user/profile/release/{id}
+  - id: user-visibility
+    inbound: /api/v1/strider/user-profile/{userId}/visibility
+    outbound: /api/v1/user/profile/{userId}/visibility
+  - id: user-profile-images
+    inbound: /static/uploads/(?<filename>.*)
+    outbound: /static/uploads/${filename}
+  - id: user-following
+    inbound: /api/v1/strider/user-profile/{id}/following
+    outbound: /api/v1/user/profile/{id}/following
+  - id: user-followers
+    inbound: /api/v1/strider/user-profile/{id}/followers
+    outbound: /api/v1/user/profile/{id}/followers
+  - id: user-follow-relations
+    inbound: /api/v1/strider/user-profile/{id}/follow-relations
+    outbound: /api/v1/user/profile/{id}/follow-relations
+  - id: user-follow
+    inbound: /api/v1/strider/user-profile/{followerId}/follow/{followingId}
+    outbound: /api/v1/user/profile/{followerId}/follow/{followingId}
+  - id: user-unfollow
+    inbound: /api/v1/strider/user-profile/{followerId}/unfollow/{followingId}
+    outbound: /api/v1/user/profile/{followerId}/unfollow/{followingId}
+  - id: follow-request-accept
+    inbound: /api/v1/strider/user-profile/{userId}/follow-requests/{followerId}/accept
+    outbound: /api/v1/user/profile/{userId}/follow-requests/{followerId}/accept
+  - id: follow-request-reject
+    inbound: /api/v1/strider/user-profile/{userId}/follow-requests/{followerId}
+    outbound: /api/v1/user/profile/{userId}/follow-requests/{followerId}
+  - id: get-user-settings
+    inbound: /api/v1/strider/user-profile/settings
+    outbound: /api/v1/user/profile/settings
+  - id: update-user-settings
+    inbound: /api/v1/strider/user-profile/update/settings
+    outbound: /api/v1/user/profile/update/settings
+  - id: get-exercise-list
+    inbound: /api/v1/strider/user-profile/exercises
+    outbound: /api/v1/user/profile/exercises

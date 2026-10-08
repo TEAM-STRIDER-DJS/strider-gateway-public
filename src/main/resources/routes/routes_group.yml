@@ -1,0 +1,5 @@
+routes:
+  - service: group
+  - id: get-group
+    inbound: /v1/gw/group
+    outbound: /v1/group

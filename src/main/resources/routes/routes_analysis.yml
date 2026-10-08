@@ -1,0 +1,20 @@
+routes:
+  - service: analysis
+  - id: health-sync
+    inbound: /api/v1/strider/analysis/health/sync
+    outbound: /api/v1/analysis/health/sync
+  - id: health-today
+    inbound: /api/v1/strider/analysis/health/today
+    outbound: /api/v1/analysis/health/today
+  - id: health-weekly
+    inbound: /api/v1/strider/analysis/health/weekly
+    outbound: /api/v1/analysis/health/weekly
+  - id: ai-report
+    inbound: /api/v1/strider/analysis/ai/report
+    outbound: /api/v1/analysis/ai/report
+  - id: ai-actions
+    inbound: /api/v1/strider/analysis/ai/actions
+    outbound: /api/v1/analysis/ai/actions
+  - id: ai-action-complete
+    inbound: /api/v1/strider/analysis/ai/actions/{id}/complete
+    outbound: /api/v1/analysis/ai/actions/{id}/complete

@@ -1,0 +1,110 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: strider-gateway
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  strider-cloud-properties:
+    filter:
+      auth:
+        enable: true
+        ignores:
+          - /api/v1/strider/user-profile/login
+          - /api/v1/strider/user-profile/phone/send-code
+          - /api/v1/strider/user-profile/phone/verify-code
+          - /api/v1/strider/user-profile/find/id
+          - /api/v1/strider/user-profile/password/reset
+          - /api/v1/strider/user-profile/strider-user/{id}
+          - /api/v1/strider/user-profile/auth/token
+          - /api/v1/strider/user-profile/signup
+          - /api/v1/strider/user-profile/strider-user/phone/{phoneNum}
+          - /api/v1/strider/user-profile/update
+          - /api/v1/strider/user-profile/delete
+          - /api/v1/strider/user-profile/update/password
+          - /api/v1/strider/user-profile/image
+          - /api/v1/strider/user-profile/image/delete
+          - /api/v1/strider/user-profile/report
+          - /api/v1/strider/user-profile/block/{id}
+          - /api/v1/strider/user-profile/release/{id}
+          - /api/v1/strider/media/presign
+          - /api/v1/strider/media/delete
+          - /api/v1/strider/user-profile/{id}/following
+          - /api/v1/strider/user-profile/{id}/followers
+          - /api/v1/strider/user-profile/{id}/follow-relations
+          - /api/v1/strider/user-profile/{followerId}/follow/{followingId}
+          - /api/v1/strider/user-profile/{followerId}/unfollow/{followingId}
+          - /api/v1/strider/user-profile/{userId}/follow-requests/{followerId}/accept
+          - /api/v1/strider/user-profile/{userId}/follow-requests/{followerId}
+          - /api/v1/strider/noti
+          - /api/v1/strider/noti/{id}/read
+          - /api/v1/strider/noti/device-token
+          - /api/v1/strider/noti/{id}
+          - /api/v1/strider/noti/unread-count
+          - /api/v1/strider/user-profile/settings
+          - /api/v1/strider/user-profile/update/settings
+          - /api/v1/strider/user-profile/exercises
+          - /api/v1/strider/feed
+          - /api/v1/strider/feed/{feedId}
+          - /api/v1/strider/feed/follow
+          - /api/v1/strider/feed/{feedId}/like
+          - /api/v1/strider/feed/{feedId}/save
+          - /api/v1/strider/feed/media
+          - /api/v1/strider/feed/{feedId}/share-url
+          - /api/v1/strider/feed/{feedId}/comment
+          - /api/v1/strider/feed/{feedId}/comment/{commentId}/reply
+          - /api/v1/strider/feed/{feedId}/comment/{commentId}
+          - /api/v1/strider/feed/{feedId}/comment/{commentId}/like
+          - /api/v1/strider/feed/saved
+          - /api/v1/strider/feed/saved/thumbnails
+          - /ws-chat/**
+          - /api/v1/strider/chat/rooms
+          - /api/v1/strider/chat/rooms/direct/{receiverId}
+          - /api/v1/strider/chat/rooms/{roomId}/read
+          - /api/v1/strider/chat/rooms/{roomId}/messages
+          - /api/v1/strider/chat/messages/{messageId}
+          - /api/v1/strider/chat/rooms/{roomId}/members
+          - /api/v1/strider/chat/rooms/group
+          - /api/v1/strider/chat/rooms/{roomId}/members/invitable
+          - /api/v1/strider/chat/rooms/{roomId}/members/me
+          - /api/v1/strider/chat/rooms/{roomId}/messages/unread
+          - /api/v1/strider/chat/rooms/{roomId}/notices
+          - /api/v1/strider/chat/rooms/{roomId}/notices/active
+          - /api/v1/strider/chat/rooms/{roomId}/notices/{noticeId}
+          - /api/v1/strider/chat/rooms/{roomId}/media
+          - /api/v1/strider/analysis/health/sync
+          - /api/v1/strider/analysis/health/today
+          - /api/v1/strider/analysis/health/weekly
+          - /api/v1/strider/analysis/ai/report
+          - /api/v1/strider/analysis/ai/actions
+          - /api/v1/strider/analysis/ai/actions/{id}/complete
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:8081, https://www.strider.r-e.kr"
+            allowedMethods: "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+            allowedHeaders: "*"
+            allowCredentials: true
+
+service-config:
+  services:
+    user-profile: http://strider-user-profile:8001
+    chat: http://strider-chat:8002
+    community: http://strider-community:8003
+    feed: http://strider-feed:8004
+    group: http://strider-group:8005
+    notification: http://strider-notification:8006
+    analysis: http://strider-analysis:8007
+    media: http://strider-media:8008
+
+logging:
+  level:
+    org.springframework.cloud.gateway.filter.WebsocketRoutingFilter: TRACE

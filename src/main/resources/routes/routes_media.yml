@@ -1,0 +1,8 @@
+routes:
+  - service: media
+  - id: presign
+    inbound: /api/v1/strider/media/presign
+    outbound: /api/v1/media/presign
+  - id: delete
+    inbound: /api/v1/strider/media/delete
+    outbound: /api/v1/media/delete

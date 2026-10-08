@@ -1,0 +1,48 @@
+routes:
+  - service: chat
+  - id: get-chat-rooms
+    inbound: /api/v1/strider/chat/rooms
+    outbound: /api/v1/chat/rooms
+  - id: create-direct-room
+    inbound: /api/v1/strider/chat/rooms/direct/{receiverId}
+    outbound: /api/v1/chat/rooms/direct/{receiverId}
+  - id: mark-messages-read
+    inbound: /api/v1/strider/chat/rooms/{roomId}/read
+    outbound: /api/v1/chat/rooms/{roomId}/read
+  - id: get-messages
+    inbound: /api/v1/strider/chat/rooms/{roomId}/messages
+    outbound: /api/v1/chat/rooms/{roomId}/messages
+  - id: get-message
+    inbound: /api/v1/strider/chat/messages/{messageId}
+    outbound: /api/v1/chat/messages/{messageId}
+  - id: ws-chat
+    inbound: /ws-chat/**
+    outbound: /ws-chat/**
+    websocket: true
+  - id: get-room-members
+    inbound: /api/v1/strider/chat/rooms/{roomId}/members
+    outbound: /api/v1/chat/rooms/{roomId}/members
+  - id: create-group-room
+    inbound: /api/v1/strider/chat/rooms/group
+    outbound: /api/v1/chat/rooms/group
+  - id: get-room-members-invitable
+    inbound: /api/v1/strider/chat/rooms/{roomId}/members/invitable
+    outbound: /api/v1/chat/rooms/{roomId}/members/invitable
+  - id: leave-group-room
+    inbound: /api/v1/strider/chat/rooms/{roomId}/members/me
+    outbound: /api/v1/chat/rooms/{roomId}/members/me
+  - id: get-unread-messages
+    inbound: /api/v1/strider/chat/rooms/{roomId}/messages/unread
+    outbound: /api/v1/chat/rooms/{roomId}/messages/unread
+  - id: get-active-notice
+    inbound: /api/v1/strider/chat/rooms/{roomId}/notices/active
+    outbound: /api/v1/chat/rooms/{roomId}/notices/active
+  - id: get-notice-detail
+    inbound: /api/v1/strider/chat/rooms/{roomId}/notices/{noticeId}
+    outbound: /api/v1/chat/rooms/{roomId}/notices/{noticeId}
+  - id: notices
+    inbound: /api/v1/strider/chat/rooms/{roomId}/notices
+    outbound: /api/v1/chat/rooms/{roomId}/notices
+  - id: get-media-list
+    inbound: /api/v1/strider/chat/rooms/{roomId}/media
+    outbound: /api/v1/chat/rooms/{roomId}/media

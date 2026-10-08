@@ -1,0 +1,71 @@
+# 워크플로우의 이름
+name: Deploy Strider Gateway on Develop
+
+# 언제 이 워크플로우를 실행할 지 설정
+on:  
+    push:
+        branches:
+            - develop
+
+            # 실행할 작업들을 정의
+jobs:
+  deploy: # 이 job의 이름
+      runs-on: ubuntu-latest # github이 제공하는 가상 머신 환경
+      steps:
+          - name: Checkout full repo with submodules
+            uses: actions/checkout@v3
+            with:
+              fetch-depth: 0
+              submodules: recursive
+              token: ${{ secrets.GIT_PAT_SYLEE }}
+
+          - name: Set up OpenJDK 21
+            uses: actions/setup-java@v3
+            with:
+              distribution: 'temurin'
+              java-version: '21'
+
+          - name: Grant execute permission for gradlew
+            run: chmod +x ./gradlew
+
+          - name: Build with Gradle # Gradle로 프로젝트 빌드 (빌드 결과 build/libs/에 jar 파일 생성)
+            # run: ./gradlew clean build --refresh-dependencies --no-daemon
+            run: ./gradlew clean build --no-daemon
+            env:
+              GITHUB_ACTOR: ${{ secrets.GIT_USERNAME_SYLEE }}
+              GITHUB_TOKEN: ${{ secrets.GIT_PAT_SYLEE }}
+
+          # - name: List build output
+          #   run: ls -al build/libs/
+
+          - name: Archieve build and Dockerfile # 빌드 결과물과 Dockerfile을 따로 deploy 폴더에 모아서 압축
+            run: |
+              mkdir deploy
+              cp build/libs/*-0.0.1.jar deploy/app.jar
+              cp Dockerfile deploy/
+              cd deploy && tar czf deploy.tar.gz *
+
+          - name: Copy build to EC2 # 로컬 워크플로우 환경 -> EC2 서버로 파일 복사
+            uses: appleboy/scp-action@v0.1.6
+            with:
+              host: ${{ secrets.EC2_HOST }}
+              username: ubuntu
+              key: ${{ secrets.EC2_SSH_KEY }}
+              source: "deploy/deploy.tar.gz"
+              target: "/home/ubuntu/strider-backend/strider-gateway"
+
+          - name: SSH Deploy to EC2
+            uses: appleboy/ssh-action@v1.0.3
+            with: 
+              host: ${{ secrets.EC2_HOST }}
+              username: ubuntu
+              key: ${{ secrets.EC2_SSH_KEY }}
+              script: |
+                cd /home/ubuntu/strider-backend/strider-gateway/deploy
+                tar xzf deploy.tar.gz
+                echo "[Strider-Gateway] Pull latest code"
+                docker stop strider-gateway || true
+                docker rm strider-gateway || true
+                docker rmi -f strider-gateway-img || true
+                docker build -t strider-gateway-img .
+                docker run -d --name strider-gateway --network strider-net -p 8000:8000 strider-gateway-img

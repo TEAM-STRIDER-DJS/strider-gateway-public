@@ -1,0 +1,17 @@
+routes:
+  - service: notification
+  - id: notification-unread-count
+    inbound: /api/v1/strider/noti/unread-count
+    outbound: /api/v1/noti/unread-count
+  - id: notification-read
+    inbound: /api/v1/strider/noti/{id}/read
+    outbound: /api/v1/noti/{id}/read
+  - id: notification-device-token
+    inbound: /api/v1/strider/noti/device-token
+    outbound: /api/v1/noti/device-token
+  - id: notification-delete
+    inbound: /api/v1/strider/noti/{id}
+    outbound: /api/v1/noti/{id}
+  - id: notification-list
+    inbound: /api/v1/strider/noti
+    outbound: /api/v1/noti
